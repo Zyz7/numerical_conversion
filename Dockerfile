@@ -1,4 +1,4 @@
-FROM gcc:lastest
+FROM gcc:latest
 
 WORKDIR /app
 
