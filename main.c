@@ -4,18 +4,34 @@
 #include <termios.h>
 #include <ctype.h>
 #include <string.h>
+#include <math.h>
 
 char getch(); 
 void buffer();
 void error();
 void menu();
 void decimal();
+void binary();
+void octal();
+void hexadecimal();
 int validateDecimal(char *);
 void decimalToBinary(long);
 void decimalToOctal(long);
+void decimalToHexa(long);
+int validateBinary(char *);
+void binaryToDecimal(char *);
+void binaryToOctal(char *);
+void binaryToHexa(char *);
+int validateOctal(char *);
+void octalToDecimal(long);
+void octalToBinary(long);
+void octalToHexa(long);
+int validateHexa(char *);
+int valueHexadecimal(char v);
+void hexaToDecimal(char *);
+void hexaToBinary(char *);
+void hexaToOctal(char *);
 void exitMsg();
-
-// https://github.com/Alkaison/Number-System-Converter/blob/main/Code%20Files/Number-System-Converter.c
 
 int main() 
 {    
@@ -25,7 +41,7 @@ int main()
 
 void menu() 
 {
-    int number;
+    int option;
 
     system("clear");
 
@@ -41,24 +57,24 @@ void menu()
     printf("5 Exit the program\n\n");
 
     printf("Select a number:\n");
-    scanf("%d", &number);
+    scanf("%d", &option);
 
-    switch (number)
+    switch (option)
     {
     case 1:
         decimal();
         break;
     
     case 2:
-        printf("Press 2\n");
+        binary();
         break;
 
     case 3:
-        printf("Press 3\n");
+        octal();
         break;
 
     case 4:
-        printf("Press 4\n");
+        hexadecimal();
         break;
 
     case 5:
@@ -127,9 +143,11 @@ void decimal()
     } 
     else
     {
-        printf("\n\033[0;32m***** Conversion Results *****\033[0m\n");
+        printf("\n\033[0;32m***** Conversion Results *****\n");
         decimalToBinary(strtol(chain, NULL, 10));
         decimalToOctal(strtol(chain, NULL, 10));
+        decimalToHexa(strtol(chain, NULL, 10));
+        printf("\033[0m\n");
     }
 
     printf("\nYou want to convert another number 'y' or 'n': \n");
@@ -151,7 +169,7 @@ void decimal()
     default:
         printf("\n\033[0;31mError: the options are only 'y' or 'n'\033[0m\n");
         error();
-        menu();
+        decimal();
         break;
     }
 }
@@ -213,7 +231,372 @@ void decimalToOctal(long num)
     {
         printf("%d", octal[j]);
     }
-    printf("\n");
+}
+
+void decimalToHexa(long num)
+{
+    char hexa[100];
+    int i = 0;
+
+    if (num == 0) 
+    {
+        printf("\nHexadecimal number: 0\n");
+        return;
+    }
+
+    while (num != 0) {
+        int temp = num % 16;
+        if (temp < 10)
+        {
+            hexa[i++] = temp + 48;
+        }
+        else 
+        {
+            hexa[i++] = temp + 55;
+        }
+
+        num = num / 16;
+    }
+
+    printf("\nHexadecimal number: ");
+    for (int j = i - 1; j >= 0; j--)
+    {
+        printf("%c", hexa[j]);
+    }
+}
+
+void binary()
+{
+    int ch;
+    char chain[100];
+
+    printf("\n\033[0;34m***** Binary Conversion *****\033[0m\n");
+    printf("Enter the binary number:\n");
+    scanf("%s", chain);
+
+    if (validateBinary(chain) == 0) 
+    {
+        printf("\n\033[0;31mError: the number must be a binary\033[0m\n");
+        error();
+        binary();
+    } 
+    else
+    {
+        printf("\n\033[0;32m***** Conversion Results *****\n");
+        binaryToDecimal(chain);
+        binaryToOctal(chain);
+        binaryToHexa(chain);
+        printf("\033[0m\n");
+    }
+
+    printf("\nYou want to convert another number 'y' or 'n': \n");
+    buffer();
+    ch = getchar();
+
+    switch (ch)
+    {
+    case 'y':
+    case 'Y':
+        binary();
+        break;
+
+    case 'n':
+    case 'N':
+        menu();
+        break;
+    
+    default:
+        printf("\n\033[0;31mError: the options are only 'y' or 'n'\033[0m\n");
+        error();
+        binary();
+        break;
+    }
+}
+
+int validateBinary(char *chain)
+{
+    if (strlen(chain) < 0) return 0;
+
+    for (int i = 0; chain[i] != '\0'; i++)
+    {
+        if (!isdigit(chain[i])) return 0;
+
+        if (chain[i] != '0' && chain[i] != '1') 
+            return 0;           
+    }
+
+    return 1;
+}
+
+void binaryToDecimal(char *chain)
+{
+    int decimal = 0;
+    int longitud = strlen(chain);
+    int base = 1;
+
+    for (int i = longitud - 1; i >= 0; i--)
+    {
+        if (chain[i] == '1')
+            decimal = decimal + base;
+        base = base * 2; 
+    }
+
+    printf("\nBinary number: %d", decimal);
+}
+
+void binaryToOctal(char *chain)
+{
+    int decimal = 0;
+    int longitud = strlen(chain);
+    int base = 1;
+
+    for (int i = longitud - 1; i >= 0; i--)
+    {
+        if (chain[i] == '1')
+            decimal = decimal + base;
+        base = base * 2; 
+    }
+
+    decimalToOctal(decimal);
+}
+
+void binaryToHexa(char *chain)
+{
+    int decimal = 0;
+    int longitud = strlen(chain);
+    int base = 1;
+
+    for (int i = longitud - 1; i >= 0; i--)
+    {
+        if (chain[i] == '1')
+            decimal = decimal + base;
+        base = base * 2; 
+    }
+
+    decimalToHexa(decimal);
+}
+
+void octal()
+{
+    int ch;
+    char chain[100];
+
+    printf("\n\033[0;34m***** Octal Conversion *****\033[0m\n");
+    printf("Enter the octal number:\n");
+    scanf("%s", chain);
+
+    if (validateOctal(chain) == 0) 
+    {
+        printf("\n\033[0;31mError: the number must be a octal\033[0m\n");
+        error();
+        octal();
+    } 
+    else
+    {
+        printf("\n\033[0;32m***** Conversion Results *****\n");
+        octalToDecimal(strtol(chain, NULL, 10));
+        octalToBinary(strtol(chain, NULL, 10));
+        octalToHexa(strtol(chain, NULL, 10));
+        printf("\033[0m\n");
+    }
+
+    printf("\nYou want to convert another number 'y' or 'n': \n");
+    buffer();
+    ch = getchar();
+
+    switch (ch)
+    {
+    case 'y':
+    case 'Y':
+        octal();
+        break;
+
+    case 'n':
+    case 'N':
+        menu();
+        break;
+    
+    default:
+        printf("\n\033[0;31mError: the options are only 'y' or 'n'\033[0m\n");
+        error();
+        octal();
+        break;
+    }
+}
+
+int validateOctal(char *chain)
+{
+    if (strlen(chain) < 0) return 0;
+
+    for (int i = 0; chain[i] != '\0'; i++)
+    {
+        if (!isdigit(chain[i])) return 0;
+
+        if (chain[i] < '0' || chain[i] > '7') 
+            return 0;           
+    }
+
+    return 1;
+}
+
+void octalToDecimal(long num)
+{
+    int i = 0;
+    int decimal = 0;
+
+    while (num != 0)
+    {
+        int dig = num % 10;
+        decimal += dig * pow(8, i);
+        num = num / 10;
+        i++;      
+    }
+
+    printf("\nDecimal number: %d", decimal);
+}
+
+void octalToBinary(long num)
+{
+    int i = 0;
+    int decimal = 0;
+
+    while (num != 0)
+    {
+        int dig = num % 10;
+        decimal += dig * pow(8, i);
+        num = num / 10;
+        i++;      
+    }
+
+    decimalToBinary(decimal);
+}
+
+void octalToHexa(long num)
+{
+    int i = 0;
+    int decimal = 0;
+
+    while (num != 0)
+    {
+        int dig = num % 10;
+        decimal += dig * pow(8, i);
+        num = num / 10;
+        i++;      
+    }
+
+    decimalToHexa(decimal);
+}
+
+void hexadecimal()
+{
+    int ch;
+    char chain[100];
+
+    printf("\n\033[0;34m***** Hexadecimal Conversion *****\033[0m\n");
+    printf("Enter the hexadecimal number:\n");
+    scanf("%s", chain);
+
+    if (validateHexa(chain) == 0) 
+    {
+        printf("\n\033[0;31mError: the number must be a hexadecimal\033[0m\n");
+        error();
+        hexadecimal();
+    } 
+    else
+    {
+        printf("\n\033[0;32m***** Conversion Results *****\n");
+        hexaToDecimal(chain);
+        hexaToBinary(chain);
+        hexaToOctal(chain);
+        printf("\033[0m\n");
+    }
+
+    printf("\nYou want to convert another number 'y' or 'n': \n");
+    buffer();
+    ch = getchar();
+
+    switch (ch)
+    {
+    case 'y':
+    case 'Y':
+        hexadecimal();
+        break;
+
+    case 'n':
+    case 'N':
+        menu();
+        break;
+    
+    default:
+        printf("\n\033[0;31mError: the options are only 'y' or 'n'\033[0m\n");
+        error();
+        hexadecimal();
+        break;
+    }
+}
+
+int validateHexa(char *chain)
+{
+    if (strlen(chain) < 0) return 0;
+
+    for (int i = 0; chain[i] != '\0'; i++)
+    {
+        if (!isdigit(chain[i]) && 
+            chain[i] < 'A' || chain[i] > 'F') 
+            return 0;     
+    }
+
+    return 1;
+}
+
+int valueHexadecimal(char v)
+{
+    if (v >= '0' && v <= '9')
+        return v - '0';
+    else if (v >= 'A' && v <= 'F')
+        return v - 'A' + 10;
+}
+
+void hexaToDecimal(char *chain)
+{
+    int decimal = 0;
+    int longitud = strlen(chain);
+
+    for (int i = 0; i < longitud; i++) 
+    {
+        int value = valueHexadecimal(chain[i]);
+        decimal = decimal * 16 + value;
+    }
+
+    printf("\nDecimal number: %d", decimal);
+}
+
+void hexaToBinary(char *chain)
+{
+    int decimal = 0;
+    int longitud = strlen(chain);
+
+    for (int i = 0; i < longitud; i++) 
+    {
+        int value = valueHexadecimal(chain[i]);
+        decimal = decimal * 16 + value;
+    }
+
+    decimalToBinary(decimal);
+}
+
+void hexaToOctal(char *chain)
+{
+    int decimal = 0;
+    int longitud = strlen(chain);
+
+    for (int i = 0; i < longitud; i++) 
+    {
+        int value = valueHexadecimal(chain[i]);
+        decimal = decimal * 16 + value;
+    }
+
+    decimalToOctal(decimal);
 }
 
 void exitMsg()
