@@ -143,7 +143,7 @@ void decimal()
     } 
     else
     {
-        printf("\n\033[0;32m***** Conversion Results *****\n");
+        printf("\n\033[0;32m***** Conversion Results : %s *****\n", chain);
         decimalToBinary(strtol(chain, NULL, 10));
         decimalToOctal(strtol(chain, NULL, 10));
         decimalToHexa(strtol(chain, NULL, 10));
@@ -282,7 +282,7 @@ void binary()
     } 
     else
     {
-        printf("\n\033[0;32m***** Conversion Results *****\n");
+        printf("\n\033[0;32m***** Conversion Results : %s *****\n", chain);
         binaryToDecimal(chain);
         binaryToOctal(chain);
         binaryToHexa(chain);
@@ -393,7 +393,7 @@ void octal()
     } 
     else
     {
-        printf("\n\033[0;32m***** Conversion Results *****\n");
+        printf("\n\033[0;32m***** Conversion Results : %s *****\n", chain);
         octalToDecimal(strtol(chain, NULL, 10));
         octalToBinary(strtol(chain, NULL, 10));
         octalToHexa(strtol(chain, NULL, 10));
@@ -504,7 +504,7 @@ void hexadecimal()
     } 
     else
     {
-        printf("\n\033[0;32m***** Conversion Results *****\n");
+        printf("\n\033[0;32m***** Conversion Results : %s *****\n", chain);
         hexaToDecimal(chain);
         hexaToBinary(chain);
         hexaToOctal(chain);
