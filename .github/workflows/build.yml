@@ -19,12 +19,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Set up GCC (si usas GCC como compilador)
-      - name: Set up GCC
-        uses: actions/setup-toolchain@v1
-        with:
-          toolchain: gcc
-
       # Instalar las dependencias (si las necesitas)
       - name: Install dependencies
         run: sudo apt-get install -y build-essential
