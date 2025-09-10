@@ -1,5 +1,5 @@
 # Compilar
-gcc -o program program.c
+gcc -o program program.c -lm
 
 # Ejecutar
 ./program
