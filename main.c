@@ -43,7 +43,7 @@ void menu()
 {
     int option;
 
-    system("clear");
+    //system("clear");
 
     printf("\n\033[0;34m********************************\n");
     printf("***** Numerical Conversion *****\n");

@@ -1,0 +1,44 @@
+name: C Build and Test
+
+# Define the events that will trigger this workflow
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+# Define the jobs that will run
+jobs:
+  build:
+    runs-on: ubuntu-latest  # macos-latest, windows-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Set up GCC (si usas GCC como compilador)
+      - name: Set up GCC
+        uses: actions/setup-toolchain@v1
+        with:
+          toolchain: gcc
+
+      # Instalar las dependencias (si las necesitas)
+      - name: Install dependencies
+        run: sudo apt-get install -y build-essential
+
+      # Compilar el proyecto
+      - name: Build
+        run: |
+          gcc -o main main.c -lm
+
+      # (Opcional) Ejecutar pruebas (si tienes pruebas unitarias)
+      - name: Run tests
+        run: echo -e "1\n77\nn\n2\n1001101\nn\n3\n115\nn\n4\n4D\nn\n5\n" > input.txt  
+
+      # (Opcional) Verificar si el programa funciona
+      - name: Verify the build
+        run: |
+          ./main < input.txt
