@@ -1,8 +1,6 @@
-# Numerical Conversion
+# Numerical Conversion 🔢
 
 <img width="749" height="405" alt="screen143733" src="https://github.com/user-attachments/assets/6108e1c2-3fdc-401f-861c-a3a92b8f4d13" />
-
-# Number Base Converter 🔢
 
 A text-mode program written in C that converts numbers between **decimal,
 binary, octal and hexadecimal**, through an interactive console interface.
