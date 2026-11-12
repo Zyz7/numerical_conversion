@@ -1,6 +1,6 @@
 # Numerical Conversion 🔢
 
-<img width="749" height="405" alt="screen143733" src="https://github.com/user-attachments/assets/6108e1c2-3fdc-401f-861c-a3a92b8f4d13" />
+<img width="724" height="295" alt="Captura de pantalla de 2026-11-12 09-16-48" src="https://github.com/user-attachments/assets/a6eeb691-1602-427c-b6f6-26717e422182" />
 
 A text-mode program written in C that converts numbers between **decimal,
 binary, octal and hexadecimal**, through an interactive console interface.
@@ -32,14 +32,14 @@ Requires a C compiler such as GCC or Clang.
 ### Linux / macOS
 
 ```bash
-gcc -Wall -o converter main.c
+gcc -o converter main.c -lm
 ./converter
 ```
 
 ### Windows (MinGW)
 
 ```bash
-gcc -Wall -o converter.exe main.c
+gcc -o converter.exe main.c
 converter.exe
 ```
 
@@ -49,6 +49,6 @@ converter.exe
 - [ ] Conversion history
 - [ ] Continuous conversion mode without returning to the menu
 
-## tools used
+## 🛠️ Tools used
 
 - **[JDoodle](https://www.jdoodle.com/)**
