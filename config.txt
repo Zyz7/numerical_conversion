@@ -1,5 +1,5 @@
 # Compilar
-gcc -o program program.c -lm
+gcc -o main main.c -lm
 
 # Ejecutar
-./program
+./main

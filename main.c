@@ -56,7 +56,7 @@ void menu()
     printf("4 Hexadecimal conversion\n");
     printf("5 Exit the program\n\n");
 
-    printf("Select a number:\n");
+    printf("Select a number (1 - 5):\n");
     scanf("%d", &option);
 
     switch (option)
